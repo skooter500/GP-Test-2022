@@ -62,7 +62,7 @@ void controllerChange(int channel, int number, int value) {
   
   if (number== 18)
   {
-    speed = map(value, 0, 127, 0, 0.1f);
+    jc.speed = map(value, 0, 127, 0, 0.1f);
   }
   
   if (number == 71)
