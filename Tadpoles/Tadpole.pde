@@ -11,7 +11,7 @@ class Tadpole
   char gender = 'h';
   float r = w * 0.5f;
   float eyeRadius = w * 0.1f;
-  int c;
+  float  c1, c2;
 
   public Tadpole(int length, String name, int limbs, int eyes, char gender) {
     this.length = length;
@@ -20,6 +20,8 @@ class Tadpole
     this.eyes = eyes;
     this.gender = gender;
   }
+  
+  
   
   public Tadpole()
   {
@@ -35,7 +37,8 @@ class Tadpole
     char[] genders = {'m','f', 'h', 'n'}; 
     gender = genders[(int)random(0, genders.length)];
     
-    c = (int) random(0, 255);
+    c1 = random(0, 255);
+    c2 = (c1 + 30);
     
     int nameLength = (int)random(1,5);
     name = "";
@@ -44,13 +47,14 @@ class Tadpole
       name += nameCombos[(int)random(0, nameCombos.length)] + " ";
     }
     name = name.substring(0, name.length() - 1);
+    
+    println(this);
   }
 
   public void render(float cx, float cy)
   {
 
     float half = w * length * 0.5f;
-    stroke(c, 255, 255);
     strokeWeight(2);
     pushMatrix();
     translate(cx, cy);
@@ -60,11 +64,14 @@ class Tadpole
 
     textSize(36);
     textAlign(CENTER, CENTER);
-    fill(c, 255, 255);
+    float average = (c1 + c2) * 0.5f;
+    fill(average, 255, 255);
     text(name, 0, -w * 3);
     noFill();
     for (int i = 0; i < length; i ++)
     {
+      stroke(map(i, 0, length, c1, c2), 255, 255);
+    
       float y = i * w;
       float f = 0.5f;
       float w1 = sin(map(i, 0, length, f + f, PI)) * w; 
@@ -73,6 +80,8 @@ class Tadpole
       {
         line(-w1, y, - w1 - w1, y);
         line(w1, y, w1 * 2, y);
+        circle((-w1 * 2.0f) - eyeRadius, y, eyeRadius * 2);
+        circle((w1 * 2.0f) + eyeRadius, y, eyeRadius * 2);
       }      
       if (i == 0)
       {
@@ -114,6 +123,11 @@ class Tadpole
       break;
     }
   }
+  
+  public String toString() {
+    return "Tadpole [c1=" + c1 + ", c2=" + c2 + ", eyeRadius=" + eyeRadius + ", eyes=" + eyes + ", gender=" + gender
+            + ", length=" + length + ", limbs=" + limbs + ", name=" + name + ", r=" + r + ", w=" + w + "]";
+}
 
   void drawEyes(int numEyes, float hw, float hh)
   { //<>//
@@ -121,7 +135,7 @@ class Tadpole
     for(int i = 0 ; i < numEyes ; i ++)
     {
       float angle = map(i, 0, numEyes, -90, 90) + offs;
-      float stalkLength = r + (sin(map(i, 0 , numEyes, 0, PI)) * r);
+      float stalkLength = r * 0.25f + (sin(map(angle, -90, 90, 0, PI)) * r * 2);
       drawEye(angle, stalkLength, hw, hh);
     }
   }
