@@ -16,9 +16,9 @@ class Tadpole
   
   float speed = 1;
   
-  float alpha = 255;
+  float alpha = 127;
   
-    float cw = 127;
+    float cw = 50;
 
 
   public Tadpole(int length, String name, int limbs, int eyes, char gender) {
@@ -66,7 +66,7 @@ class Tadpole
     c2 = c1 + cw;
 
     float half = w * length * 0.5f;
-    strokeWeight(2);
+    strokeWeight(1);
     pushMatrix();
     translate(cx, cy);
     translate(0, - half);
@@ -76,11 +76,12 @@ class Tadpole
     textSize(36);
     textAlign(CENTER, CENTER);
     fill(c2 % 255, 255, 255, alpha);
-    text(name, 0, -w * 3);
+    //text(name, 0, -w * 3);
     noFill();
     for (int i = 0; i < length; i ++)
     { 
-      stroke(pingpongmap(i - (frameCount * speed), 0, (length - 1) * 0.5f, c2, c1) % 255, 255, 255, alpha);
+      println(c1, c2);
+      stroke(pingpongmap(i, 0, (length) * 0.5f, c1, c2) % 255, 255, 255, alpha);
     
       float y = i * w;
       float f = 0.5f;

@@ -7,10 +7,10 @@ MidiBus myBus; // The MidiBus
 
 void setup()
 {
-  size(800, 1000);
+  size(800, 1000, P3D);
   smooth();
   jc = new Tadpole();
-  
+  background(0);
   MidiBus.list();
   
   myBus = new MidiBus(this, 1, 4);
@@ -53,7 +53,7 @@ void controllerChange(int channel, int number, int value) {
   
   if (number == 114)
   {
-    jc.cw = lerp(jc.cw, map(value * 2.0f, 0, 127, 0, 255), 0.1f);
+    jc.cw = lerp(jc.cw, map(value, 0, 127, 0, 255), 0.1f);
   }
   if (number == 74)
   {
@@ -62,7 +62,7 @@ void controllerChange(int channel, int number, int value) {
   
   if (number== 18)
   {
-    jc.speed = map(value, 0, 127, 0, 0.1f);
+    jc.speed = map(value, 0, 127, 0, 3f);
   }
   
   if (number == 71)
@@ -136,7 +136,7 @@ void keyPressed()
 void draw() {
   colorMode(RGB);
   blendMode(SUBTRACT);
-  fill(255, 3);
+  fill(255, 1);
   rect(0, 0, width, height);
   blendMode(BLEND);
   colorMode(HSB);
