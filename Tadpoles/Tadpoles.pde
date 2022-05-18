@@ -48,16 +48,17 @@ void controllerChange(int channel, int number, int value) {
   println(value);
   if (number == 10)
   {
-    jc.c1 = lerp(jc.c1, map(value * 2.0f, 0, 127, 0, 255), 0.1f);
+    jc.c1 = map(value * 2.0f, 0, 127, 0, 255);
   }
   
   if (number == 114)
   {
-    jc.cw = lerp(jc.cw, map(value, 0, 127, 0, 255), 0.1f);
+    jc.cw = map(value, 0, 127, 0, 255);
+    println(jc.cw);
   }
   if (number == 74)
   {
-    jc.fatness = lerp(jc.fatness, map(value, 0, 127, 0, 5), 0.2f);
+    jc.fatness = map(value, 0, 127, 0, 5);
   }
   
   if (number== 18)
@@ -67,11 +68,11 @@ void controllerChange(int channel, int number, int value) {
   
   if (number == 71)
   {
-    jc.length = (int) map(value, 0, 127, 0, 15);
+    jc.length = map(value, 0, 127, 0, 20);
   }
    if (number == 19)
   {
-    jc.alpha = (int) map(value, 0, 127, 0, 255);
+    jc.alpha = map(value, 0, 127, 0, 255);
   }
 }
 
@@ -140,5 +141,5 @@ void draw() {
   rect(0, 0, width, height);
   blendMode(BLEND);
   colorMode(HSB);
-  jc.render(width / 2, height / 1.8f);
+  jc.render(width / 2, height / 1.8f, frameCount * jc.speed);
 }

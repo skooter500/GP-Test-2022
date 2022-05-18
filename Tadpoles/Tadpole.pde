@@ -1,13 +1,13 @@
 class Tadpole
 {
-  int length = 5;
+  float length = 5;
 
 
   String name = "";
   float w = 50;
 
   int limbs = 1;
-  int eyes = 2;
+  float eyes = 2;
   char gender = 'h';
   float r = w * 0.5f;
   float eyeRadius = w * 0.1f;
@@ -38,14 +38,14 @@ class Tadpole
   
   public void randomise()
   {
-    length = (int) random(1, 15);
+    //length = (int) random(1, 15);
     limbs = (int) random(0, 5);
     eyes = (int) random(0, 9);
     
     char[] genders = {'m','f', 'h', 'n'}; 
     gender = genders[(int)random(0, genders.length)];
     
-    c1 = random(0, 255);
+    //c1 = random(0, 255);
     
     
     int nameLength = (int)random(1,5);
@@ -60,7 +60,7 @@ class Tadpole
   }
   
 
-  public void render(float cx, float cy)
+  public void render(float cx, float cy, float offs)
   {
     
     c2 = c1 + cw;
@@ -80,8 +80,8 @@ class Tadpole
     noFill();
     for (int i = 0; i < length; i ++)
     { 
-      println(c1, c2);
-      stroke(pingpongmap(i, 0, (length) * 0.5f, c1, c2) % 255, 255, 255, alpha);
+      //println(c1, c2);
+      stroke(pingpongmap(i + offs, 0, (length-1) * 0.5f, c1, c2) % 255, 255, 255, alpha);
     
       float y = i * w;
       float f = 0.5f;
@@ -140,10 +140,10 @@ class Tadpole
             + ", length=" + length + ", limbs=" + limbs + ", name=" + name + ", r=" + r + ", w=" + w + "]";
 }
 
-  void drawEyes(int numEyes, float hw, float hh)
+  void drawEyes(float numEyes, float hw, float hh)
   { //<>//
     float offs = 90.0f / (float)numEyes;
-    for(int i = 0 ; i < numEyes ; i ++)
+    for(float i = 0 ; i < numEyes ; i ++)
     {
       float angle = map(i, 0, numEyes, -90, 90) + offs;
       float stalkLength = r * 0.25f + (sin(map(angle, -90, 90, 0, PI)) * r * 2);
