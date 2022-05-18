@@ -12,6 +12,12 @@ class Tadpole
   float r = w * 0.5f;
   float eyeRadius = w * 0.1f;
   float  c1, c2;
+  float fatness = 1.0f;
+  
+  float speed = 1;
+  
+    float cw = 127;
+
 
   public Tadpole(int length, String name, int limbs, int eyes, char gender) {
     this.length = length;
@@ -30,7 +36,7 @@ class Tadpole
   
   public void randomise()
   {
-    length = (int) random(1, 10);
+    length = (int) random(1, 15);
     limbs = (int) random(0, 5);
     eyes = (int) random(0, 9);
     
@@ -38,7 +44,7 @@ class Tadpole
     gender = genders[(int)random(0, genders.length)];
     
     c1 = random(0, 255);
-    c2 = (c1 + 30);
+    
     
     int nameLength = (int)random(1,5);
     name = "";
@@ -50,9 +56,13 @@ class Tadpole
     
     println(this);
   }
+  
 
   public void render(float cx, float cy)
   {
+    
+    c2 = c1 + cw;
+    println(c1, c2);
 
     float half = w * length * 0.5f;
     strokeWeight(2);
@@ -64,17 +74,16 @@ class Tadpole
 
     textSize(36);
     textAlign(CENTER, CENTER);
-    float average = (c1 + c2) * 0.5f;
-    fill(average, 255, 255);
+    fill(c2 % 255, 255, 255);
     text(name, 0, -w * 3);
     noFill();
     for (int i = 0; i < length; i ++)
     {
-      stroke(map(i, 0, length, c1, c2), 255, 255);
+      stroke(pingpongmap(i + speed, (length - 1) * 0.5f, 0, c1, c2) % 255, 255, 255);
     
       float y = i * w;
       float f = 0.5f;
-      float w1 = sin(map(i, 0, length, f + f, PI)) * w; 
+      float w1 = sin(map(i, 0, length, f + f, PI)) * w * fatness; 
       ellipse(0, y, w1 * 2f, w);
       if (limbs > 0 && i > 0)
       {
