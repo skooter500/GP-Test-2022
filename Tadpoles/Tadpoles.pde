@@ -9,7 +9,6 @@ void setup()
 {
   size(800, 1000);
   smooth();
-  colorMode(HSB);
   jc = new Tadpole();
   
   MidiBus.list();
@@ -58,12 +57,21 @@ void controllerChange(int channel, int number, int value) {
   }
   if (number == 74)
   {
-    jc.fatness = lerp(jc.fatness, map(value, 0, 127, 0, 5), 0.1f);
+    jc.fatness = lerp(jc.fatness, map(value, 0, 127, 0, 5), 0.2f);
   }
   
   if (number== 18)
   {
     speed = map(value, 0, 127, 0, 0.1f);
+  }
+  
+  if (number == 71)
+  {
+    jc.length = (int) map(value, 0, 127, 0, 15);
+  }
+   if (number == 19)
+  {
+    jc.alpha = (int) map(value, 0, 127, 0, 255);
   }
 }
 
@@ -124,9 +132,13 @@ void keyPressed()
   }
 }
 
-void draw()
-{
-  background(0);
-  jc.speed += speed;
+
+void draw() {
+  colorMode(RGB);
+  blendMode(SUBTRACT);
+  fill(255, 3);
+  rect(0, 0, width, height);
+  blendMode(BLEND);
+  colorMode(HSB);
   jc.render(width / 2, height / 1.8f);
 }

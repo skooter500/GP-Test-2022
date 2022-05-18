@@ -16,6 +16,8 @@ class Tadpole
   
   float speed = 1;
   
+  float alpha = 255;
+  
     float cw = 127;
 
 
@@ -62,7 +64,6 @@ class Tadpole
   {
     
     c2 = c1 + cw;
-    println(c1, c2);
 
     float half = w * length * 0.5f;
     strokeWeight(2);
@@ -74,12 +75,12 @@ class Tadpole
 
     textSize(36);
     textAlign(CENTER, CENTER);
-    fill(c2 % 255, 255, 255);
+    fill(c2 % 255, 255, 255, alpha);
     text(name, 0, -w * 3);
     noFill();
     for (int i = 0; i < length; i ++)
-    {
-      stroke(pingpongmap(i + speed, (length - 1) * 0.5f, 0, c1, c2) % 255, 255, 255);
+    { 
+      stroke(pingpongmap(i - (frameCount * speed), 0, (length - 1) * 0.5f, c2, c1) % 255, 255, 255, alpha);
     
       float y = i * w;
       float f = 0.5f;
