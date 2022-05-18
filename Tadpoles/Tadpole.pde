@@ -14,7 +14,7 @@ class Tadpole
   float  c1, c2;
   float fatness = 1.0f;
   
-  float speed = 1;
+  float speed = 0.0f;
   
   float alpha = 127;
   
@@ -66,7 +66,7 @@ class Tadpole
     c2 = c1 + cw;
 
     float half = w * length * 0.5f;
-    strokeWeight(1);
+    strokeWeight(3);
     pushMatrix();
     translate(cx, cy);
     translate(0, - half);
@@ -75,17 +75,19 @@ class Tadpole
 
     textSize(36);
     textAlign(CENTER, CENTER);
-    fill(c2 % 255, 255, 255, alpha);
+    fill(c2 % 255, 255, 255, alpha);  
     //text(name, 0, -w * 3);
     noFill();
     for (int i = 0; i < length; i ++)
     { 
       //println(c1, c2);
-      stroke(pingpongmap(i + offs, 0, (length-1) * 0.5f, c1, c2) % 255, 255, 255, alpha);
+      stroke(pingpongmap(i, 0, (length-1) * 0.5f, c1, c2) % 255, 255, 255, alpha);
     
       float y = i * w;
       float f = 0.5f;
-      float w1 = sin(map(i, 0, length, f + f, PI)) * w * fatness; 
+      float w1 = sin(map(i, 0, length, f + f, PI)) * fatness; 
+      //w = w1;
+      //w = w1;
       ellipse(0, y, w1 * 2f, w);
       if (limbs > 0 && i > 0)
       {
@@ -110,15 +112,15 @@ class Tadpole
     switch (gender)
     {
     case 'm':
-      {
-        float y1 =  (length * w) - r;
-        line(0, y1, 0, y1 + r);
-        circle(0, y1 + r + eyeRadius, eyeRadius * 2.0f);
+      { 
+        float y =  ((length-1) * w) + (w * 0.5f);   
+        line(0, y, 0, y + r);
+        circle(0, y + r + eyeRadius, eyeRadius * 2.0f);
       }
-      break;
-    case 'f':
-      {
-        float y =  ((length - 1) * w);
+      break; 
+    case 'f':  
+      { 
+        float y =  ((length-1) * w);  
         circle(0, y, eyeRadius * 4.0f);
       }
       break;
@@ -148,7 +150,7 @@ class Tadpole
       float angle = map(i, 0, numEyes, -90, 90) + offs;
       float stalkLength = r * 0.25f + (sin(map(angle, -90, 90, 0, PI)) * r * 2);
       drawEye(angle, stalkLength, hw, hh);
-    }
+    }     
   }
 
   private void drawEye(float angle, float stalkLength, float headW, float headH)

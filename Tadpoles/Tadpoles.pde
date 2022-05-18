@@ -7,7 +7,7 @@ MidiBus myBus; // The MidiBus
 
 void setup()
 {
-  size(800, 1000, P3D);
+  fullScreen(P3D);
   smooth();
   jc = new Tadpole();
   background(0);
@@ -58,14 +58,14 @@ void controllerChange(int channel, int number, int value) {
   }
   if (number == 74)
   {
-    jc.fatness = map(value, 0, 127, 0, 5);
+    jc.fatness = map(value, 0, 127, 0, width / 2);
   }
   
   if (number== 18)
   {
-    jc.speed = map(value, 0, 127, 0, 3f);
+    jc.w = map(value, 0, 127, 0, height / 2);
   }
-  
+     
   if (number == 71)
   {
     jc.length = map(value, 0, 127, 0, 20);
@@ -75,8 +75,6 @@ void controllerChange(int channel, int number, int value) {
     jc.alpha = map(value, 0, 127, 0, 255);
   }
 }
-
-float speed = 1.0f;
 
 
 
@@ -137,7 +135,7 @@ void keyPressed()
 void draw() {
   colorMode(RGB);
   blendMode(SUBTRACT);
-  fill(255, 1);
+  fill(255, 1f);
   rect(0, 0, width, height);
   blendMode(BLEND);
   colorMode(HSB);
