@@ -67,16 +67,19 @@ class Tadpole
     {
       float y = i * w;
       float f = 0.5f;
-      float w1 = sin(map(i, 0, length-1, f, PI - f)) * w; 
+      float w1 = sin(map(i, 0, length, f + f, PI)) * w; 
       ellipse(0, y, w1 * 2f, w);
       if (limbs > 0 && i > 0)
       {
         line(-w1, y, - w1 - w1, y);
         line(w1, y, w1 * 2, y);
+      }      
+      if (i == 0)
+      {
+        drawEyes(eyes, w1, w * 0.5f);
       }
-      drawEyes(eyes, w1, w);
     }
-
+    
     drawGenitals();
 
     popMatrix();
@@ -113,18 +116,19 @@ class Tadpole
   }
 
   void drawEyes(int numEyes, float hw, float hh)
-  {
-    float offs = 180.0f / (float)numEyes;
+  { //<>//
+    float offs = 90.0f / (float)numEyes;
     for(int i = 0 ; i < numEyes ; i ++)
     {
-      float angle = map(i, 0, numEyes, -90, 90) + (offs * 0.5f);
-      float stalkLength = r + (sin(map(i, 0 , numEyes-1, 0, PI)) * r);
+      float angle = map(i, 0, numEyes, -90, 90) + offs;
+      float stalkLength = r + (sin(map(i, 0 , numEyes, 0, PI)) * r);
       drawEye(angle, stalkLength, hw, hh);
     }
   }
 
   private void drawEye(float angle, float stalkLength, float headW, float headH)
   {
+    
     float x1 = sin(radians(angle)) * (headW);
     float y1 = - cos(radians(angle)) * (headH);
 
