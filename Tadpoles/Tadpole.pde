@@ -130,8 +130,9 @@ class Tadpole
         line(0, y1, 0, y1 + r);
         circle(0, y1 + r + eyeRadius, eyeRadius * 2.0f);
 
-        float y =  ((length - 1) * w);
-        circle(0, y, eyeRadius * 4.0f);
+        float y =  ((length-1) * w) + (w * 0.5f);   
+        line(0, y, 0, y + r);
+        circle(0, y + r + eyeRadius, eyeRadius * 2.0f);
       }
       break;
     }
@@ -148,7 +149,7 @@ class Tadpole
     for(float i = 0 ; i < numEyes ; i ++)
     {
       float angle = map(i, 0, numEyes, -90, 90) + offs;
-      float stalkLength = r * 0.25f + (sin(map(angle, -90, 90, 0, PI)) * r * 2);
+      float stalkLength = r * 0.25f + (sin(map(angle, -90, 90, 0, PI)) * r * 4);
       drawEye(angle, stalkLength, hw, hh);
     }     
   }
